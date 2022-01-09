@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<base:ContentPageBase
+    x:Class="TwentyOne.Pages.GameScreenPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:TwentyOne.Pages.Base;assembly=TwentyOne"
+    xmlns:converters="clr-namespace:TwentyOne.Converters;assembly=TwentyOne"
+    xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:pageViewModels="clr-namespace:TwentyOne.ViewModels.PageViewModels;assembly=TwentyOne"
+    xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:viewModels="clr-namespace:TwentyOne.ViewModels;assembly=TwentyOne"
+    xmlns:views="http://xamarin.com/schemas/2020/toolkit"
+    x:DataType="pageViewModels:GameScreenViewModel"
+    x:TypeArguments="pageViewModels:GameScreenViewModel"
+    BackgroundColor="#21BEC9">
+
+    <ContentPage.Resources>
+        <converters:IntToDiceImageSourceConverter x:Key="IntToDiceImageSourceConverter" />
+        <Style TargetType="Frame">
+            <Setter Property="Padding" Value="9" />
+            <Setter Property="CornerRadius" Value="12" />
+        </Style>
+
+        <Style TargetType="Image">
+            <Setter Property="HeightRequest" Value="130" />
+            <Setter Property="WidthRequest" Value="130" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid
+        Margin="20,0"
+        ColumnDefinitions="2*, *"
+        ColumnSpacing="20">
+
+        <pancakeView:PancakeView
+            Grid.Column="0"
+            Padding="15"
+            BackgroundColor="#D493A0"
+            CornerRadius="20"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+            <Grid
+                ColumnDefinitions="Auto,Auto,Auto"
+                ColumnSpacing="12"
+                HorizontalOptions="Center"
+                RowDefinitions="Auto,Auto"
+                RowSpacing="12"
+                VerticalOptions="Center">
+
+                <Frame
+                    x:Name="Dice1"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    views:IconTintColorEffect.TintColor="{Binding CurrentRoundViewModel.Dices[0].Color}"
+                    BackgroundColor="{Binding CurrentRoundViewModel.Dices[0].BorderColor}">
+                    <Image Source="{Binding CurrentRoundViewModel.Dices[0].Value, Converter={StaticResource IntToDiceImageSourceConverter}}" />
+                </Frame>
+                <Frame
+                    x:Name="Dice2"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    views:IconTintColorEffect.TintColor="{Binding CurrentRoundViewModel.Dices[1].Color}"
+                    BackgroundColor="{Binding CurrentRoundViewModel.Dices[1].BorderColor}">
+                    <Image Source="{Binding CurrentRoundViewModel.Dices[1].Value, Converter={StaticResource IntToDiceImageSourceConverter}}" />
+                </Frame>
+                <Frame
+                    x:Name="Dice3"
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    views:IconTintColorEffect.TintColor="{Binding CurrentRoundViewModel.Dices[2].Color}"
+                    BackgroundColor="{Binding CurrentRoundViewModel.Dices[2].BorderColor}">
+                    <Image Source="{Binding CurrentRoundViewModel.Dices[2].Value, Converter={StaticResource IntToDiceImageSourceConverter}}" />
+                </Frame>
+
+                <Frame
+                    x:Name="Dice4"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    views:IconTintColorEffect.TintColor="{Binding CurrentRoundViewModel.Dices[3].Color}"
+                    BackgroundColor="{Binding CurrentRoundViewModel.Dices[3].BorderColor}">
+                    <Image Source="{Binding CurrentRoundViewModel.Dices[3].Value, Converter={StaticResource IntToDiceImageSourceConverter}}" />
+                </Frame>
+                <Frame
+                    x:Name="Dice5"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    views:IconTintColorEffect.TintColor="{Binding CurrentRoundViewModel.Dices[4].Color}"
+                    BackgroundColor="{Binding CurrentRoundViewModel.Dices[4].BorderColor}">
+                    <Image Source="{Binding CurrentRoundViewModel.Dices[4].Value, Converter={StaticResource IntToDiceImageSourceConverter}}" />
+                </Frame>
+                <Frame
+                    x:Name="Dice6"
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    views:IconTintColorEffect.TintColor="{Binding CurrentRoundViewModel.Dices[5].Color}"
+                    BackgroundColor="{Binding CurrentRoundViewModel.Dices[5].BorderColor}">
+                    <Image Source="{Binding CurrentRoundViewModel.Dices[5].Value, Converter={StaticResource IntToDiceImageSourceConverter}}" />
+                </Frame>
+            </Grid>
+        </pancakeView:PancakeView>
+        <pancakeView:PancakeView
+            Grid.Column="1"
+            Padding="15"
+            BackgroundColor="#D493A0"
+            CornerRadius="20"
+            VerticalOptions="Center">
+            <StackLayout Spacing="20">
+                <Label
+                    Margin="0,0,0,25"
+                    FontAttributes="Bold"
+                    FontFamily="rimouski"
+                    FontSize="Title"
+                    HorizontalOptions="Center"
+                    Text="TwentyOne!"
+                    TextColor="Black" />
+
+                <Button
+                    BackgroundColor="#017A97"
+                    Command="{Binding NextRoundAsyncCommand}"
+                    CornerRadius="35"
+                    FontFamily="rimouski"
+                    FontSize="Medium"
+                    HeightRequest="75"
+                    IsEnabled="{Binding CurrentRoundViewModel.NextPlayerEnabled}"
+                    Text="Volgende speler"
+                    TextColor="White"
+                    VerticalOptions="CenterAndExpand" />
+
+                <Button
+                    BackgroundColor="#017A97"
+                    Clicked="OnRollClickedAsync"
+                    CornerRadius="35"
+                    FontFamily="rimouski"
+                    FontSize="Medium"
+                    HeightRequest="75"
+                    IsEnabled="{Binding CurrentRoundViewModel.CanRollAgain}"
+                    Text="Rol dobbelstenen"
+                    TextColor="White"
+                    VerticalOptions="CenterAndExpand" />
+            </StackLayout>
+        </pancakeView:PancakeView>
+    </Grid>
+
+</base:ContentPageBase>
